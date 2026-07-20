@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resifriends — Portal do Aluno</title>
+  <link rel="icon" type="image/png" href="logo_resifriends.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Lato:wght@400;700;900&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #2E1D12; }
+    #root { min-height: 100vh; }
+    /* tela enquanto carrega */
+    #boot {
+      position: fixed; inset: 0; background: #2E1D12; color: #C9A227;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Lato', sans-serif; gap: 14px; z-index: 9999;
+    }
+    #boot img { width: 150px; height: auto; }
+    #boot .txt { font-size: 14px; color: #b9a894; letter-spacing: .05em; }
+    #boot.hide { display: none; }
+  </style>
+</head>
+<body>
+  <div id="boot">
+    <img src="logo_resifriends.png" alt="Resifriends" onerror="this.style.display='none'">
+    <div class="txt">Carregando o portal…</div>
+  </div>
+  <div id="root"></div>
+
+  <!-- React -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Firebase (versão compat, funciona sem build) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <!-- Configuração do Firebase (chaves do projeto SESPE 2026) -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCi9OgMJZNlDdvdfg3NkCFhPHqcCNAULGg",
+      authDomain: "sespe-2026.firebaseapp.com",
+      projectId: "sespe-2026",
+      storageBucket: "sespe-2026.firebasestorage.app",
+      messagingSenderId: "220655135282",
+      appId: "1:220655135282:web:723af1f1b25dc4ec0c6a2b"
+    };
+    try {
+      firebase.initializeApp(firebaseConfig);
+      window.firebase = firebase; // o portal usa window.firebase.firestore()
+      console.log("Firebase conectado ✓");
+    } catch (e) {
+      console.error("Falha ao conectar o Firebase:", e);
+    }
+  </script>
+
+  <!-- O portal (já compilado de JSX para JS) -->
+  <script src="portal_app.js"></script>
+
+  <!-- Montagem do app na tela -->
+  <script>
+    (function () {
+      function montar() {
+        try {
+          const root = ReactDOM.createRoot(document.getElementById("root"));
+          root.render(React.createElement(App));
+          document.getElementById("boot").classList.add("hide");
+        } catch (e) {
+          document.getElementById("boot").innerHTML =
+            '<div style="color:#f0a09c;font-family:sans-serif;max-width:340px;text-align:center;padding:20px">' +
+            'Houve um erro ao carregar o portal. Recarregue a página. Se persistir, avise a professora.<br><br>' +
+            '<small style="color:#b9a894">' + (e && e.message ? e.message : e) + '</small></div>';
+          console.error(e);
+        }
+      }
+      if (typeof App === "undefined") {
+        // caso o portal_app.js ainda não tenha definido App
+        window.addEventListener("load", montar);
+      } else {
+        montar();
+      }
+    })();
+  </script>
+</body>
+</html>
