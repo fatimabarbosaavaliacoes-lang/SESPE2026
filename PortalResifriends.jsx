@@ -25,7 +25,7 @@ const TURMA_2026 = [
   { nome: "Cledivalda Milena Rodrigues de Arruda",  codigo: "CLEDIVALDA",     senha: "Cledivalda2681" },
   { nome: "Rafaelli Eloisa da Hora",                codigo: "RAFAELLI",       senha: "Rafaelli4658" },
   { nome: "Dayane Cybelle Araujo de Andrade Silva", codigo: "DAYANE-CYBELLE", senha: "Dayane7891" },
-  { nome: "Eduarda Gayosso",                        codigo: "EDUARDA-GAYOSSO", senha: "Eduarda9975" },
+ 
   { nome: "Ana Carolina Cristóvão",              codigo: "ANA-CAROLINA",   senha: "Ana9042" },
   { nome: "Sandreane Brasil",                       codigo: "SANDREANE",      senha: "Sandreane8226" },
 ];
